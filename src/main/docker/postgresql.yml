@@ -1,0 +1,12 @@
+version: '2'
+services:
+    cleandata-postgresql:
+        container_name: cleandata-postgresql
+        image: postgres:9.5.2
+        # volumes:
+        #     - ~/volumes/jhipster/cleandata/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=cleandata
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

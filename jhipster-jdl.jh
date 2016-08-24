@@ -1,0 +1,16 @@
+
+entity Category {
+	name String required maxlength(256)    
+}
+
+entity CategoryData {
+	subcategory String required maxlength(256)    
+}
+
+relationship ManyToMany {
+  CategoryData{category} to Category{categoryData}
+}
+
+service all with serviceImpl
+dto * with mapstruct
+paginate all with pager

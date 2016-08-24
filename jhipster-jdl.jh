@@ -1,14 +1,10 @@
-
 entity Category {
-	name String required maxlength(256)    
+	name String required maxlength(256)
 }
 
 entity CategoryData {
-	subcategory String required maxlength(256)    
-}
-
-relationship ManyToMany {
-  CategoryData{category} to Category{categoryData}
+	category String required maxlength(256),
+	subcategory String required maxlength(256)
 }
 
 service all with serviceImpl

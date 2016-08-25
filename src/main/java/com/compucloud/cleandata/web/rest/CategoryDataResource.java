@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class CategoryDataResource {
     private CategoryDataService categoryDataService;
     
     @Inject
-    private CategoryDataMapper categoryDataMapper;
+    private CategoryDataMapper categoryDataMapper;    
     
     /**
      * POST  /category-data : Create a new categoryData.
@@ -52,40 +53,16 @@ public class CategoryDataResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<CategoryDataDTO> createCategoryData(@Valid @RequestBody CategoryDataDTO categoryDataDTO) throws URISyntaxException {
-        log.debug("REST request to save CategoryData : {}", categoryDataDTO);
-        if (categoryDataDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("categoryData", "idexists", "A new categoryData cannot already have an ID")).body(null);
-        }
-        CategoryDataDTO result = categoryDataService.save(categoryDataDTO);
-        return ResponseEntity.created(new URI("/api/category-data/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("categoryData", result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /category-data : Updates an existing categoryData.
-     *
-     * @param categoryDataDTO the categoryDataDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated categoryDataDTO,
-     * or with status 400 (Bad Request) if the categoryDataDTO is not valid,
-     * or with status 500 (Internal Server Error) if the categoryDataDTO couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @RequestMapping(value = "/category-data",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<CategoryDataDTO> updateCategoryData(@Valid @RequestBody CategoryDataDTO categoryDataDTO) throws URISyntaxException {
-        log.debug("REST request to update CategoryData : {}", categoryDataDTO);
-        if (categoryDataDTO.getId() == null) {
-            return createCategoryData(categoryDataDTO);
-        }
-        CategoryDataDTO result = categoryDataService.save(categoryDataDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("categoryData", categoryDataDTO.getId().toString()))
-            .body(result);
-    }
+    public ResponseEntity<List<CategoryDataDTO>> createCategoryDataList(@Valid @RequestBody List<CategoryDataDTO> categoryDataDTOList) throws URISyntaxException {
+        log.debug("REST request to save CategoryData : {}", categoryDataDTOList);
+        List<CategoryDataDTO> resultList = new ArrayList<CategoryDataDTO>();
+        for (CategoryDataDTO categoryDataDTO : categoryDataDTOList) {;
+        	CategoryDataDTO result = categoryDataService.save(categoryDataDTO);
+        	resultList.add(result);
+        }        
+        return ResponseEntity.created(new URI("/api/category-data/"))
+                       .body(resultList);
+    }    
 
     /**
      * GET  /category-data : get all the categoryData.

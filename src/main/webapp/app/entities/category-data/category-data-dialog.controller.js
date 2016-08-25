@@ -14,6 +14,7 @@
         vm.clear = clear;
         vm.save = save;
         vm.add = add;
+        vm.saveList = saveList;
         vm.categoryDataList = [];
 
         $timeout(function (){
@@ -37,9 +38,14 @@
                 CategoryData.save(vm.categoryData, onSaveSuccess, onSaveError);
             }
         }
+        
+        function saveList () {
+            vm.isSaving = true;            
+            CategoryData.save(vm.categoryDataList, onSaveSuccess, onSaveError);            
+        }
 
         function onSaveSuccess (result) {
-            $scope.$emit('cleandataApp:categoryDataUpdate', result);
+            //$scope.$emit('cleandataApp:categoryDataUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
         }

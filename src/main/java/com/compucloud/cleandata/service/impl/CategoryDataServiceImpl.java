@@ -23,6 +23,7 @@ import com.compucloud.cleandata.domain.CategoryData;
 import com.compucloud.cleandata.repository.CategoryDataRepository;
 import com.compucloud.cleandata.repository.CategoryRepository;
 import com.compucloud.cleandata.service.CategoryDataService;
+import com.compucloud.cleandata.web.rest.dto.CategoryCountDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
 import com.compucloud.cleandata.web.rest.mapper.CategoryDataMapper;
 import com.compucloud.cleandata.web.rest.mapper.CategoryMapper;
@@ -117,7 +118,7 @@ public class CategoryDataServiceImpl implements CategoryDataService{
         Page<CategoryData> result = categoryDataRepository.findAll(pageable); 
         return result;
     }
-
+    
     /**
      *  Get one categoryData by id.
      *
@@ -141,4 +142,29 @@ public class CategoryDataServiceImpl implements CategoryDataService{
         log.debug("Request to delete CategoryData : {}", id);
         categoryDataRepository.delete(id);
     }
+
+	
+	@Transactional(readOnly = true) 
+	public List<CategoryCountDTO> findCategoryCounts() {
+		
+		//#1 Get records from database
+		List<CategoryData> categoryDataList = categoryDataRepository.findAll();
+		//#2 Load categories into one dimensional array
+		List<String> categoriesList = new ArrayList<String>();
+		for (CategoryData categoryData : categoryDataList) {
+			categoriesList.add(categoryData.getCategory());
+		}
+		//Check if the count is 0 the return empty
+		List<CategoryCountDTO> countDTOList = new ArrayList<CategoryCountDTO>();
+		if(categoryDataList.size() == 0){
+			return countDTOList;
+		}
+		//#3 Use frequency method to get the counts for each valid category, store in countDTOList 
+		List<Category> validCategories = categoryRepository.findAll();		
+		for (Category category : validCategories) {
+			countDTOList.add(new CategoryCountDTO(category.getName(),Collections.frequency(categoriesList, category.getName())));
+		}		
+		
+		return countDTOList;
+	}
 }

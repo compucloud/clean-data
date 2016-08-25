@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
 import com.compucloud.cleandata.service.CategoryDataService;
 import com.compucloud.cleandata.service.CategoryService;
 import com.compucloud.cleandata.service.util.RandomUtil;
+import com.compucloud.cleandata.web.rest.dto.CategoryCountDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
 
@@ -113,6 +114,42 @@ public class CategoryDataServiceIntTest {
     	
     	boolean exist = CollectionUtils.contains(dataList.iterator(), new CategoryDataDTO("PERSON","Bob Jones"));
     	assertTrue(exist);
+    }
+    
+    @Test
+    public void testFindCountDTO() {
+    	
+    	assertEquals(0,categoryDataService.findCategoryCounts().size());
+    	
+    	//Store Test Valid Categories
+    	categoryService.save(new CategoryDTO("PERSON"));
+    	categoryService.save(new CategoryDTO("PLACE"));
+    	categoryService.save(new CategoryDTO("ANIMAL"));
+    	categoryService.save(new CategoryDTO("COMPUTER"));
+    	categoryService.save(new CategoryDTO("OTHER"));
+    	//Create Test Data
+    	List<CategoryDataDTO> dataList = new ArrayList<CategoryDataDTO>();
+    	dataList.add(new CategoryDataDTO("PERSON","Bob Jones"));
+    	dataList.add(new CategoryDataDTO("PLACE","Washington"));
+    	dataList.add(new CategoryDataDTO("PERSON","Mary"));
+    	dataList.add(new CategoryDataDTO("COMPUTER","Mac"));
+    	dataList.add(new CategoryDataDTO("PERSON","Bob Jones"));
+    	dataList.add(new CategoryDataDTO("OTHER","Tree"));
+    	dataList.add(new CategoryDataDTO("ANIMAL","Dog"));
+    	dataList.add(new CategoryDataDTO("PLACE","Texas"));
+    	dataList.add(new CategoryDataDTO("FOOD","Steak"));
+    	dataList.add(new CategoryDataDTO("ANIMAL","Cat"));
+    	dataList.add(new CategoryDataDTO("PERSON","Mac"));  	
+    	//Perform operations and report results
+    	List<CategoryDataDTO> result = categoryDataService.saveList(dataList);     	
+    	assertEquals(9,result.size());
+    	
+    	List<CategoryCountDTO> counts = categoryDataService.findCategoryCounts();
+    	for(CategoryCountDTO dto: counts){
+    		System.out.println(dto.getName() + " " + dto.getCount());
+    	}
+    	assertEquals(5,counts.size());
+    	
     }
     
     

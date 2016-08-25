@@ -2,6 +2,7 @@ package com.compucloud.cleandata.web.rest.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -25,7 +26,7 @@ public class CategoryCountDTO implements Serializable {
     @Size(max = 256)
     private String name;
     
-    private int count;
+    private int count = 0;
 
 
     public int getCount() {
@@ -79,4 +80,5 @@ public class CategoryCountDTO implements Serializable {
             ", name='" + name + "'" +
             '}';
     }
+	
 }

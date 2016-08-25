@@ -2,6 +2,7 @@ package com.compucloud.cleandata.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -163,8 +164,21 @@ public class CategoryDataServiceImpl implements CategoryDataService{
 		List<Category> validCategories = categoryRepository.findAll();		
 		for (Category category : validCategories) {
 			countDTOList.add(new CategoryCountDTO(category.getName(),Collections.frequency(categoriesList, category.getName())));
-		}		
+		}	
 		
+	   Comparator<CategoryCountDTO> byCount = new Comparator<CategoryCountDTO>() {		
+			@Override
+			public int compare(CategoryCountDTO c1, CategoryCountDTO c2) {				
+				if (c1.getCount() < c2.getCount()) {
+			           return 1;
+		       } else if (c1.getCount() > c2.getCount()){
+		           return -1;
+		       } else {
+		           return 0;
+		       }
+			}
+		};
+		countDTOList.sort(byCount);			
 		return countDTOList;
 	}
 }

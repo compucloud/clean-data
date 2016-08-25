@@ -59,4 +59,23 @@
         <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
     </div>
     <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>
+    
+     <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>Category</span></th>
+                    <th><span>Count</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="catCount in vm.categoryCount track by $index">                    
+                    <td>{{catCount.name}}</td>
+                    <td>{{catCount.count}}</td>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
 </div>

@@ -5,6 +5,7 @@ import com.compucloud.cleandata.domain.CategoryData;
 import com.compucloud.cleandata.service.CategoryDataService;
 import com.compucloud.cleandata.web.rest.util.HeaderUtil;
 import com.compucloud.cleandata.web.rest.util.PaginationUtil;
+import com.compucloud.cleandata.web.rest.dto.CategoryCountDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
 import com.compucloud.cleandata.web.rest.mapper.CategoryDataMapper;
 import org.slf4j.Logger;
@@ -77,6 +78,25 @@ public class CategoryDataResource {
         Page<CategoryData> page = categoryDataService.findAll(pageable); 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/category-data");
         return new ResponseEntity<>(categoryDataMapper.categoryDataToCategoryDataDTOs(page.getContent()), headers, HttpStatus.OK);
+    }
+    
+    /**
+     * GET  /category-data : get all the categoryData.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of categoryData in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
+     */
+    @RequestMapping(value = "/category-data-count",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<List<CategoryCountDTO>> getAllCategoryDataCount(Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to get a page of CategoryData");
+        List<CategoryCountDTO> countDTOs = categoryDataService.findCategoryCounts(); 
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/category-data-count");
+        return new ResponseEntity<>(countDTOs, HttpStatus.OK);
     }
 
     /**

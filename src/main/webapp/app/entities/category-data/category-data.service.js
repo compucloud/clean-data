@@ -24,4 +24,11 @@
             'save': { method: 'POST', isArray: true}
         });
     }
+    
+    function CategoryDataCount ($resource) {
+        var resourceUrl =  'api/category-data-count';
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true}            
+        });
+    }
 })();

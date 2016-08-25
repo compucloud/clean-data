@@ -5,9 +5,9 @@
         .module('cleandataApp')
         .controller('CategoryDataController', CategoryDataController);
 
-    CategoryDataController.$inject = ['$scope', '$state', 'CategoryData', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
+    CategoryDataController.$inject = ['$scope', '$state','$http', 'CategoryData', 'ParseLinks', 'AlertService', 'pagingParams', 'paginationConstants'];
 
-    function CategoryDataController ($scope, $state, CategoryData, ParseLinks, AlertService, pagingParams, paginationConstants) {
+    function CategoryDataController ($scope, $state, $http, CategoryData, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
         
         vm.loadPage = loadPage;
@@ -15,8 +15,21 @@
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.categoryCount = [];
 
         loadAll();
+        loadCounts();
+        
+        function loadCounts(){
+        	$http({
+        		  method: 'GET',
+        		  url: 'api/category-data-count'
+        		}).then(function successCallback(response) {
+        			vm.categoryCount = response.data;
+        		  }, function errorCallback(response) {
+        			  AlertService.error("Error loading category counts");
+        	});
+        }
 
         function loadAll () {
             CategoryData.query({

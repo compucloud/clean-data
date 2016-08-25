@@ -1,10 +1,14 @@
 package com.compucloud.cleandata.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import com.compucloud.cleandata.domain.Category;
 import com.compucloud.cleandata.domain.CategoryData;
@@ -65,10 +70,23 @@ public class CategoryDataServiceImpl implements CategoryDataService{
      */
     public List<CategoryDataDTO> saveList(List<CategoryDataDTO> categoryDataDTOList) {
         log.debug("Request to save CategoryData : {}", categoryDataDTOList);
-        //#1 Map CateogoryData dto's t to domain model objects
-        List<CategoryData> categoryDataList = categoryDataMapper.categoryDataDTOsToCategoryData(categoryDataDTOList);
         
-        //#1 Create a filtered List, Only add items that have valid categories
+        //#1 Filter duplicates
+        List<CategoryDataDTO> filteredDTOList = new ArrayList<CategoryDataDTO>();
+        List<CategoryDataDTO> alreadyAddedDTOList = new ArrayList<CategoryDataDTO>();
+        for (CategoryDataDTO categoryDataDTO : categoryDataDTOList){
+        	
+        	if(!org.springframework.util.CollectionUtils.contains(alreadyAddedDTOList.iterator(),categoryDataDTO)){
+        		filteredDTOList.add(categoryDataDTO);
+        	}
+        	if(Collections.frequency(categoryDataDTOList, categoryDataDTO) > 1){
+        		alreadyAddedDTOList.add(categoryDataDTO);
+        		log.debug("CategoryDataDTO is has dups, added to add to alreadyAddedDTOList : {}", categoryDataDTO);
+        	}
+        }              
+        
+        //#2 Create a filtered List, Only add items that have valid categories
+        List<CategoryData> categoryDataList = categoryDataMapper.categoryDataDTOsToCategoryData(filteredDTOList);
         List<CategoryData> filteredList = new ArrayList<CategoryData>();
         List<Category> validCategories = categoryRepository.findAll();
         for (CategoryData categoryData : categoryDataList) {        	
@@ -79,11 +97,11 @@ public class CategoryDataServiceImpl implements CategoryDataService{
             		break;
             	}
             }        	       	
-        }       
+        }      
         
         List<CategoryDataDTO> results = categoryDataMapper.categoryDataToCategoryDataDTOs(categoryDataRepository.save(filteredList));
         return results;
-    }
+    }   
 
     /**
      *  Get all the categoryData.

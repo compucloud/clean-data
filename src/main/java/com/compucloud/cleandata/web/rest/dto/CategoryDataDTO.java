@@ -1,6 +1,9 @@
 package com.compucloud.cleandata.web.rest.dto;
 
 import javax.validation.constraints.*;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,8 +13,18 @@ import java.util.Objects;
  */
 public class CategoryDataDTO implements Serializable {
 
-    private Long id;
+    public CategoryDataDTO(String category, String subcategory) {
+		super();
+		this.category = category;
+		this.subcategory = subcategory;
+	}
+    
+    public CategoryDataDTO() {
+		super();		
+	}
 
+	private Long id;
+    
     @NotNull
     @Size(max = 256)
     private String category;
@@ -53,8 +66,15 @@ public class CategoryDataDTO implements Serializable {
         }
 
         CategoryDataDTO categoryDataDTO = (CategoryDataDTO) o;
-
-        if ( ! Objects.equals(id, categoryDataDTO.id)) return false;
+        if(StringUtils.isBlank(this.category) || StringUtils.isBlank(categoryDataDTO.category)
+        	|| StringUtils.isBlank(this.subcategory) || StringUtils.isBlank(categoryDataDTO.subcategory)){
+        	return false;
+        }
+        
+        if((!categoryDataDTO.getCategory().toLowerCase().equals(this.category.toLowerCase()))
+        		|| (!categoryDataDTO.getSubcategory().equals(this.subcategory))){
+        	return false;
+        }        
 
         return true;
     }

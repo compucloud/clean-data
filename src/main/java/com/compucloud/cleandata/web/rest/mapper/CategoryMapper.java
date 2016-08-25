@@ -1,9 +1,10 @@
 package com.compucloud.cleandata.web.rest.mapper;
 
-import com.compucloud.cleandata.domain.*;
-import com.compucloud.cleandata.web.rest.dto.CategoryDTO;
-
 import org.mapstruct.*;
+
+import com.compucloud.cleandata.domain.Category;
+import com.compucloud.cleandata.web.rest.dto.*;
+
 import java.util.List;
 
 /**

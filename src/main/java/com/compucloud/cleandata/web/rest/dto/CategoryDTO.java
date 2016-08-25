@@ -10,7 +10,16 @@ import java.util.Objects;
  */
 public class CategoryDTO implements Serializable {
 
-    private Long id;
+    public CategoryDTO(String name) {
+		super();
+		this.name = name;
+	}
+    
+    public CategoryDTO() {
+		super();		
+	}
+
+	private Long id;
 
     @NotNull
     @Size(max = 256)

@@ -18,3 +18,5 @@ make it immediately ready for autoscaling.
 9) Created Administration Console to for adding Categories, a Sample Client to load data,
 and a Report showing current state of datastore with counts. Please see screenshots attached.
 10) OAuth2 Security
+11) Need to Add One To Many Relationship on Category to CategoryData to enforce referential
+integrity, also make CategoryData table records unique.

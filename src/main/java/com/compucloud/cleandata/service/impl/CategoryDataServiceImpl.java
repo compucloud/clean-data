@@ -1,21 +1,26 @@
 package com.compucloud.cleandata.service.impl;
 
-import com.compucloud.cleandata.service.CategoryDataService;
-import com.compucloud.cleandata.domain.CategoryData;
-import com.compucloud.cleandata.repository.CategoryDataRepository;
-import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
-import com.compucloud.cleandata.web.rest.mapper.CategoryDataMapper;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.compucloud.cleandata.domain.Category;
+import com.compucloud.cleandata.domain.CategoryData;
+import com.compucloud.cleandata.repository.CategoryDataRepository;
+import com.compucloud.cleandata.repository.CategoryRepository;
+import com.compucloud.cleandata.service.CategoryDataService;
+import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
+import com.compucloud.cleandata.web.rest.mapper.CategoryDataMapper;
+import com.compucloud.cleandata.web.rest.mapper.CategoryMapper;
 
 /**
  * Service Implementation for managing CategoryData.
@@ -31,6 +36,12 @@ public class CategoryDataServiceImpl implements CategoryDataService{
     
     @Inject
     private CategoryDataMapper categoryDataMapper;
+    
+    @Inject
+    private CategoryRepository categoryRepository;
+    
+    @Inject
+    private CategoryMapper categoryMapper;
     
     /**
      * Save a categoryData.
@@ -50,13 +61,27 @@ public class CategoryDataServiceImpl implements CategoryDataService{
      * Save a categoryDataList.
      * 
      * @param categoryDataDTOList the entity to save
-     * @return the persisted entities
+     * @return the persisted entitiesQueryByExampleExecutor<T>
      */
     public List<CategoryDataDTO> saveList(List<CategoryDataDTO> categoryDataDTOList) {
         log.debug("Request to save CategoryData : {}", categoryDataDTOList);
+        //#1 Map CateogoryData dto's t to domain model objects
         List<CategoryData> categoryDataList = categoryDataMapper.categoryDataDTOsToCategoryData(categoryDataDTOList);
-        categoryDataList = categoryDataRepository.save(categoryDataList);
-        List<CategoryDataDTO> results = categoryDataMapper.categoryDataToCategoryDataDTOs(categoryDataList);
+        
+        //#1 Create a filtered List, Only add items that have valid categories
+        List<CategoryData> filteredList = new ArrayList<CategoryData>();
+        List<Category> validCategories = categoryRepository.findAll();
+        for (CategoryData categoryData : categoryDataList) {        	
+        	for (Category validCategory : validCategories) {
+        		if(validCategory.getName().toLowerCase().equals(categoryData.getCategory().toLowerCase())){
+            		filteredList.add(categoryData);
+            		log.debug("CategoryData has valid category, added to filteredList : {}", categoryData);
+            		break;
+            	}
+            }        	       	
+        }       
+        
+        List<CategoryDataDTO> results = categoryDataMapper.categoryDataToCategoryDataDTOs(categoryDataRepository.save(filteredList));
         return results;
     }
 

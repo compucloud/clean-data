@@ -4,8 +4,8 @@ To run the project, clone it from github. In the root directory run:
 
     ./mvnw
 
-## Design Decisions
-All sreenshots located in /documenation/screenshots folder
+## Screenshots
+Screenshots of the working application located in /documenation/screenshots folder
 
 
 ## Design Decisions

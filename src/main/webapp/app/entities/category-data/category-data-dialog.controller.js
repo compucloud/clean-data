@@ -13,6 +13,8 @@
         vm.categoryData = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.add = add;
+        vm.categoryDataList = [];
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
@@ -20,6 +22,11 @@
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
+        }
+        
+        function add () {        	
+            vm.categoryDataList.push(vm.categoryData);
+            vm.categoryData = null;
         }
 
         function save () {

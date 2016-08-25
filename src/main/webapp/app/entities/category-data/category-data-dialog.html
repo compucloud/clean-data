@@ -44,7 +44,27 @@
                     This field cannot be longer than 256 characters.
                 </p>
             </div>
+            <button type="button" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-default" aria-hidden="true"
+                ng-click="vm.add()">Add</button>
         </div>
+        
+	    <div class="table-responsive">
+	        <table class="jh-table table table-striped">
+	            <thead>
+	                <tr>                    
+	                    <th><span>Category</span></th>
+	                    <th><span>Subcategory</span></th>
+	                    <th></th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr ng-repeat="lsData in vm.categoryDataList track by $index">
+	                    <td>{{lsData.category}}</td>
+	                    <td>{{lsData.subcategory}}</td>                    
+	                </tr>
+	            </tbody>
+	        </table>
+	    </div>
 
     </div>
     <div class="modal-footer">

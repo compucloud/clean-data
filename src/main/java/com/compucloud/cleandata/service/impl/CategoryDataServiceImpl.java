@@ -64,6 +64,8 @@ public class CategoryDataServiceImpl implements CategoryDataService{
     
     /**
      * Save a categoryDataList.
+     * Contains business logic to prevent duplicate entries
+     * and items that do not have valid categories.
      * 
      * @param categoryDataDTOList the entity to save
      * @return the persisted entitiesQueryByExampleExecutor<T>

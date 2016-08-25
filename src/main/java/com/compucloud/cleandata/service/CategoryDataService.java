@@ -20,6 +20,14 @@ public interface CategoryDataService {
      * @return the persisted entity
      */
     CategoryDataDTO save(CategoryDataDTO categoryDataDTO);
+    
+    /**
+     * Save a categoryData.
+     * 
+     * @param categoryDataDTO the entity to save
+     * @return the persisted entity
+     */
+    List<CategoryDataDTO> saveList(List<CategoryDataDTO> categoryDataDTOList);
 
     /**
      *  Get all the categoryData.

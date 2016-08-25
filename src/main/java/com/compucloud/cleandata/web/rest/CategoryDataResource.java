@@ -54,12 +54,8 @@ public class CategoryDataResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<CategoryDataDTO>> createCategoryDataList(@Valid @RequestBody List<CategoryDataDTO> categoryDataDTOList) throws URISyntaxException {
-        log.debug("REST request to save CategoryData : {}", categoryDataDTOList);
-        List<CategoryDataDTO> resultList = new ArrayList<CategoryDataDTO>();
-        for (CategoryDataDTO categoryDataDTO : categoryDataDTOList) {;
-        	CategoryDataDTO result = categoryDataService.save(categoryDataDTO);
-        	resultList.add(result);
-        }        
+        log.debug("REST request to save CategoryData : {}", categoryDataDTOList);        
+        List<CategoryDataDTO> resultList = categoryDataService.saveList(categoryDataDTOList);              
         return ResponseEntity.created(new URI("/api/category-data/"))
                        .body(resultList);
     }    

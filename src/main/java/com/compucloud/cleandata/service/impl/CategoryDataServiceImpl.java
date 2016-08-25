@@ -45,6 +45,20 @@ public class CategoryDataServiceImpl implements CategoryDataService{
         CategoryDataDTO result = categoryDataMapper.categoryDataToCategoryDataDTO(categoryData);
         return result;
     }
+    
+    /**
+     * Save a categoryDataList.
+     * 
+     * @param categoryDataDTOList the entity to save
+     * @return the persisted entities
+     */
+    public List<CategoryDataDTO> saveList(List<CategoryDataDTO> categoryDataDTOList) {
+        log.debug("Request to save CategoryData : {}", categoryDataDTOList);
+        List<CategoryData> categoryDataList = categoryDataMapper.categoryDataDTOsToCategoryData(categoryDataDTOList);
+        categoryDataList = categoryDataRepository.save(categoryDataList);
+        List<CategoryDataDTO> results = categoryDataMapper.categoryDataToCategoryDataDTOs(categoryDataList);
+        return results;
+    }
 
     /**
      *  Get all the categoryData.

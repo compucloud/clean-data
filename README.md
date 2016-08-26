@@ -4,6 +4,16 @@ To run the project, clone it from github. In the root directory run:
 
     ./mvnw
 
+To access the administration console for the three web services go to http://localhost:8080
+
+The REST Service Endpoints
+* http://localhost:8080/api/category-data-count
+* http://localhost:8080/api/category-data
+* http://localhost:8080/api/category
+
+Swagger Endpoint
+* http://localhost:8080/swagger-ui/index.html    
+
 ## Screenshots
 Screenshots of the working application located in /documenation/screenshots folder
 

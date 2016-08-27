@@ -14,18 +14,30 @@ The REST Service Endpoints
 Swagger Endpoint
 * http://localhost:8080/swagger-ui/index.html    
 
-## Screenshots
-Screenshots of the working application located in /documenation/screenshots folder
-
-
 ## Design Decisions
 
 * Used Jhipster to create shell for the application. It creates Java web applications using industry best practices. One drawback is that it creates a lot of unnecessary code, however pros outweighs cons. Removing unnecessary code is pretty simple task. Once the extra code is peeled away your left with a well structured application that leverages common design patterns.
-* The Tech Stack used here is Java 8, SpringBoot, SpringMVC,Angular,Hibernate ,HazelCast, PostGres. Services can be easily deployed to docker containers for microservices.
-* For persistence operations most are straight forward utilizing Spring JPARepository like CRUD operations for Category. For CategoryData Collections were used to group Categories to show count information. This should be optimized by performing groupBy queries on the database instead. In general, the business rule operations can be optimized significantly by offloading more the work to the database instead of pulling into Java memory stack.
-* UnitTest Cases were created for Service Layer operations that clean data and get count info. Service side code coverage should be near 100%. Unit test for UI layer at 95%.
-* All business logic resides in the the Services layer separate from Resources clasess.Idea being to keep Resources simple, storing business logic together.
-*  The application can be autoscaled, it includes HazelCast Web Session clustering enabled.
-*  Debated on whether to include a UI or not. Swagger is enabled on the application so one could test the service operations by passing JSON strings on Swagger UI. Opted to include a UI to simulate the realworld need for most applications to have an Administration Console. Plus it allowed me to show the output in a better presentation specifically for the counts.
+* The Tech Stack used here is Java 8, SpringBoot, SpringMVC, Angular, Hibernate ,HazelCast,  PostGres and Liquibase. Services can be easily deployed to docker containers for microservices.
+* For persistence operations, most are straight forward utilizing Spring JPA Repository CRUD operations for Category. For CategoryData Collections were used to group Categories to show count information. This should be optimized by performing groupBy queries on the database instead. In general, the business rule operations can be optimized significantly by offloading more of the work to the database instead of pulling into Java memory stack.
+* UnitTest Cases were created for Service Layer operations that clean data and get count info. Service side code coverage should be near 100%. Unit test code coverage for UI layer at 95%.
+* All business logic resides in the the services layer separate from Resources classes, with the idea being keep  REST Resources simple, storing business logic together in service classes.
+*  The application can be auto-scaled, it includes HazelCast Web Session clustering enabled. Deploying this is rather simple and can be done in roughly an hour on AWS. For a quick deployment I would recommend deploying the war for this service on to AWS Elastic Bean Stalk which has an Apache HTTP + Tomcat setup and tie it to a PostGres RDS instance. Autoscaling Policy can be configured within EBS to start the application with a minimum of 2 instances and maximum of five. New instances are added when the Average CPU Utilization is greater than 75% for five consecutive minutes. Policy should also include an alarm to notify system administrators each time a new instance is created.
+*  Debated on whether to include a UI or not. Swagger is enabled on the application so one could test the service operations by passing raw JSON strings within Swagger UI. Opted to include a custom UI to simulate the real world need for most applications to have an Administration Console. Plus it allowed me to show the output in a better presentation specifically for the counts.
 *  OAuth2 Security is included. Requestors must authenticate and receive bearer token and pass this for each request. It includes a expiry time that indicates how long the token is valid.
-* The DataLayer currently does not have a relationship between Category and CategoryData. This would be required before releasing to production to ensue that each Category in CategoryData is present in Category table. Would also need to enforce unique constraint on CategoryData for category and subcategory fields.
+* The database schema currently does not have a relationship between Category and CategoryData. This would be required before releasing to production to ensure that each Category in CategoryData is present in Category table. Would also need to enforce unique constraint on CategoryData for category and subcategory fields.  
+
+## Screenshots
+Screenshots of the working application located in /documenation/screenshots folder, see featured screen grabs below.
+
+###### Add Categories
+![Image of Add Categories](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/addCategory.png)
+###### View Categories
+![Image of View Categories](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/viewCategories.png)
+###### Sample Client
+![Image of Sample Client](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/sampleClientAddData.png)
+###### Output Screen 1
+![Image of Output Screen 1](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/OutputScreen1.png)
+###### Output Screen 2
+![Image of Output Screen 2](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/outputScreen2.png)
+###### Swagger
+![Image of Swagger](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/swagger.png)

@@ -19,6 +19,7 @@
         vm.saveList = saveList;
         vm.subcategoryEntryList = [];
         vm.editMode = true;
+        vm.subcategoryDTO = {};
 
 
 
@@ -65,6 +66,7 @@
         function onSaveSuccess (result) {
             $scope.$emit('cleandataApp:subcategoryEntryUpdate', result);
             //$uibModalInstance.close(result);
+            vm.subcategoryDTO = result;
             vm.isSaving = false;
             vm.editMode = false;
         }

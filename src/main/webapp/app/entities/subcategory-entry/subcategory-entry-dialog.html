@@ -76,6 +76,42 @@
     </div>
     <div class="modal-body" ng-hide="vm.editMode">
       Subcategory Entries Processed Successfully! See results below.
+      <h4>Records Processed</h4>
+      <div class="table-responsive">
+          <table class="jh-table table table-striped">
+              <thead>
+                  <tr>
+                      <th><span>Category</span></th>
+                      <th><span>Subcategory</span></th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="lsDataSummary in vm.subcategoryDTO.subcategoryEntryDTOList track by $index">
+                      <td>{{lsDataSummary.category}}</td>
+                      <td>{{lsDataSummary.subcategory}}</td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+      <h4>Summary</h4>
+      <div class="table-responsive">
+         <table class="jh-table table table-striped">
+             <thead>
+                 <tr>
+                     <th><span>Category</span></th>
+                     <th><span>Count</span></th>
+                     <th></th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr ng-repeat="catCountSummary in vm.subcategoryDTO.categoryCountDTOList track by $index">
+                     <td>{{catCountSummary.name}}</td>
+                     <td>{{catCountSummary.count}}</td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
       <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.closePopup()">
           <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Close</span>
       </button>

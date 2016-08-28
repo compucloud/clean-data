@@ -13,10 +13,14 @@
         vm.subcategoryEntry = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.closePopup = closePopup;
 
         vm.add = add;
         vm.saveList = saveList;
         vm.subcategoryEntryList = [];
+        vm.editMode = true;
+
+
 
         function add () {
             vm.subcategoryEntryList.push(vm.subcategoryEntry);
@@ -29,6 +33,10 @@
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
+        }
+
+        function closePopup () {
+          $uibModalInstance.close();
         }
 
         function save () {
@@ -56,8 +64,9 @@
 
         function onSaveSuccess (result) {
             $scope.$emit('cleandataApp:subcategoryEntryUpdate', result);
-            $uibModalInstance.close(result);
+            //$uibModalInstance.close(result);
             vm.isSaving = false;
+            vm.editMode = false;
         }
 
         function onSaveError () {

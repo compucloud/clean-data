@@ -6,7 +6,7 @@
                 ng-click="vm.clear()">&times;</button>
         <h4 class="modal-title" id="mySubcategoryEntryLabel">Create or edit a Subcategory Entry</h4>
     </div>
-    <div class="modal-body">
+    <div ng-show="vm.editMode" class="modal-body" >
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.subcategoryEntry.id">
             <label for="id">ID</label>
@@ -65,14 +65,19 @@
   	            </tbody>
   	        </table>
   	    </div>
-
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" ng-show="vm.editMode">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
         </button>
         <button type="submit" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
         </button>
+    </div>
+    <div class="modal-body" ng-hide="vm.editMode">
+      Subcategory Entries Processed Successfully! See results below.
+      <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="vm.closePopup()">
+          <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Close</span>
+      </button>
     </div>
 </form>

@@ -6,6 +6,7 @@ import com.compucloud.cleandata.service.CategoryDataService;
 import com.compucloud.cleandata.web.rest.util.HeaderUtil;
 import com.compucloud.cleandata.web.rest.util.PaginationUtil;
 import com.compucloud.cleandata.web.rest.dto.CategoryCountDTO;
+import com.compucloud.cleandata.web.rest.dto.CategoryDataCompositeDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
 import com.compucloud.cleandata.web.rest.mapper.CategoryDataMapper;
 import org.slf4j.Logger;
@@ -54,11 +55,11 @@ public class CategoryDataResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<CategoryDataDTO>> createCategoryDataList(@Valid @RequestBody List<CategoryDataDTO> categoryDataDTOList) throws URISyntaxException {
+    public ResponseEntity<CategoryDataCompositeDTO> createCategoryDataList(@Valid @RequestBody List<CategoryDataDTO> categoryDataDTOList) throws URISyntaxException {
         log.debug("REST request to save CategoryData : {}", categoryDataDTOList);        
-        List<CategoryDataDTO> resultList = categoryDataService.saveList(categoryDataDTOList);              
+        CategoryDataCompositeDTO result = categoryDataService.saveList(categoryDataDTOList);              
         return ResponseEntity.created(new URI("/api/category-data/"))
-                       .body(resultList);
+                       .body(result);
     }    
 
     /**

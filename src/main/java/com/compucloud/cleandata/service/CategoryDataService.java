@@ -2,6 +2,7 @@ package com.compucloud.cleandata.service;
 
 import com.compucloud.cleandata.domain.CategoryData;
 import com.compucloud.cleandata.web.rest.dto.CategoryCountDTO;
+import com.compucloud.cleandata.web.rest.dto.CategoryDataCompositeDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public interface CategoryDataService {
      * @param categoryDataDTO the entity to save
      * @return the persisted entity
      */
-    List<CategoryDataDTO> saveList(List<CategoryDataDTO> categoryDataDTOList);
+    CategoryDataCompositeDTO saveList(List<CategoryDataDTO> categoryDataDTOList);
 
     /**
      *  Get all the categoryData.

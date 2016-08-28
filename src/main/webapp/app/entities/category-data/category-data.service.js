@@ -21,14 +21,14 @@
                 }
             },
             'update': { method:'PUT' },
-            'save': { method: 'POST', isArray: true}
+            'save': { method: 'POST', isArray: false}
         });
     }
-    
+
     function CategoryDataCount ($resource) {
         var resourceUrl =  'api/category-data-count';
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true}            
+            'query': { method: 'GET', isArray: true}
         });
     }
 })();

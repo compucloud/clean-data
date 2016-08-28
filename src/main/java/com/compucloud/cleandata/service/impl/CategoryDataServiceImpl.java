@@ -25,6 +25,7 @@ import com.compucloud.cleandata.repository.CategoryDataRepository;
 import com.compucloud.cleandata.repository.CategoryRepository;
 import com.compucloud.cleandata.service.CategoryDataService;
 import com.compucloud.cleandata.web.rest.dto.CategoryCountDTO;
+import com.compucloud.cleandata.web.rest.dto.CategoryDataCompositeDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
 import com.compucloud.cleandata.web.rest.mapper.CategoryDataMapper;
 import com.compucloud.cleandata.web.rest.mapper.CategoryMapper;
@@ -65,14 +66,14 @@ public class CategoryDataServiceImpl implements CategoryDataService{
     }
     
     /**
-     * Save a categoryDataList.
+     * Save a categoryDataList..getCategoryDataDTOList()
      * Contains business logic to prevent duplicate entries
      * and items that do not have valid categories.
      * 
      * @param categoryDataDTOList the entity to save
      * @return the persisted entitiesQueryByExampleExecutor<T>
      */
-    public List<CategoryDataDTO> saveList(List<CategoryDataDTO> categoryDataDTOList) {
+    public CategoryDataCompositeDTO saveList(List<CategoryDataDTO> categoryDataDTOList) {
         log.debug("Request to save CategoryData : {}", categoryDataDTOList);
         
         //#1 Filter duplicates
@@ -101,10 +102,12 @@ public class CategoryDataServiceImpl implements CategoryDataService{
             		break;
             	}
             }        	       	
-        }      
+        }   
         
+        List<CategoryCountDTO> categoryCountDTOList = findCategoryCounts(filteredList);        
         List<CategoryDataDTO> results = categoryDataMapper.categoryDataToCategoryDataDTOs(categoryDataRepository.save(filteredList));
-        return results;
+        
+        return new CategoryDataCompositeDTO(categoryCountDTOList,results);
     }   
 
     /**
@@ -143,19 +146,23 @@ public class CategoryDataServiceImpl implements CategoryDataService{
         log.debug("Request to delete CategoryData : {}", id);
         categoryDataRepository.delete(id);
     }
+    
+    @Transactional(readOnly = true) 
+	public List<CategoryCountDTO> findCategoryCounts() {
+    	List<CategoryData> categoryDataList = categoryDataRepository.findAll();
+    	return findCategoryCounts(categoryDataList);
+    }
 
 	
 	@Transactional(readOnly = true) 
-	public List<CategoryCountDTO> findCategoryCounts() {
+	private List<CategoryCountDTO> findCategoryCounts(List<CategoryData> categoryDataList) {
 		
-		//#1 Get records from database
-		List<CategoryData> categoryDataList = categoryDataRepository.findAll();
-		//#2 Load categories into one dimensional array
+		//#1 Load categories into one dimensional array
 		List<String> categoriesList = new ArrayList<String>();
 		for (CategoryData categoryData : categoryDataList) {
 			categoriesList.add(categoryData.getCategory());
 		}
-		//Check if the count is 0 the return empty
+		//#2 Check if the count is 0 the return empty
 		List<CategoryCountDTO> countDTOList = new ArrayList<CategoryCountDTO>();
 		if(categoryDataList.size() == 0){
 			return countDTOList;

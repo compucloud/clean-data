@@ -12,6 +12,7 @@ import com.compucloud.cleandata.service.CategoryService;
 import com.compucloud.cleandata.service.util.RandomUtil;
 import com.compucloud.cleandata.web.rest.dto.CategoryCountDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDTO;
+import com.compucloud.cleandata.web.rest.dto.CategoryDataCompositeDTO;
 import com.compucloud.cleandata.web.rest.dto.CategoryDataDTO;
 
 import java.time.LocalDate;
@@ -86,8 +87,16 @@ public class CategoryDataServiceIntTest {
     	dataList.add(new CategoryDataDTO("ANIMAL","Cat"));
     	dataList.add(new CategoryDataDTO("PERSON","Mac"));  	
     	//Perform operations and report results
-    	List<CategoryDataDTO> result = categoryDataService.saveList(dataList);     	
-    	assertEquals(9,result.size());
+    	CategoryDataCompositeDTO cdComposite = categoryDataService.saveList(dataList);      	
+    	assertEquals(9,cdComposite.getCategoryDataDTOList().size());
+    	
+    	for(CategoryCountDTO dto: cdComposite.getCategoryCountDTOList()){
+    		System.out.println(dto.getName() + " " + dto.getCount());
+    	}
+    	
+    	assertEquals(5,cdComposite.getCategoryCountDTOList().size());
+    	assertEquals("ANIMAL",cdComposite.getCategoryCountDTOList().get(2).getName());
+    	assertEquals(2,cdComposite.getCategoryCountDTOList().get(2).getCount());
     	
     }
     
@@ -141,8 +150,8 @@ public class CategoryDataServiceIntTest {
     	dataList.add(new CategoryDataDTO("ANIMAL","Cat"));
     	dataList.add(new CategoryDataDTO("PERSON","Mac"));  	
     	//Perform operations and report results
-    	List<CategoryDataDTO> result = categoryDataService.saveList(dataList);     	
-    	assertEquals(9,result.size());
+    	CategoryDataCompositeDTO cdComposite = categoryDataService.saveList(dataList);     	
+    	assertEquals(9,cdComposite.getCategoryDataDTOList().size());
     	
     	List<CategoryCountDTO> counts = categoryDataService.findCategoryCounts();
     	for(CategoryCountDTO dto: counts){

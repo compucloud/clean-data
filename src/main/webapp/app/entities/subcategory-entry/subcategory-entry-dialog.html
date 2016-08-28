@@ -4,19 +4,19 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myCategoryDataLabel">Create or edit a Category Data</h4>
+        <h4 class="modal-title" id="mySubcategoryEntryLabel">Create or edit a Subcategory Entry</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.categoryData.id">
+        <div class="form-group" ng-show="vm.subcategoryEntry.id">
             <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.categoryData.id" readonly />
+                    ng-model="vm.subcategoryEntry.id" readonly />
         </div>
         <div class="form-group">
             <label class="control-label" for="field_category">Category</label>
             <input type="text" class="form-control" name="category" id="field_category"
-                    ng-model="vm.categoryData.category"
+                    ng-model="vm.subcategoryEntry.category"
                     required ng-maxlength="256" />
             <div ng-show="editForm.category.$invalid">
                 <p class="help-block"
@@ -32,7 +32,7 @@
         <div class="form-group">
             <label class="control-label" for="field_subcategory">Subcategory</label>
             <input type="text" class="form-control" name="subcategory" id="field_subcategory"
-                    ng-model="vm.categoryData.subcategory"
+                    ng-model="vm.subcategoryEntry.subcategory"
                     required ng-maxlength="256" />
             <div ng-show="editForm.subcategory.$invalid">
                 <p class="help-block"
@@ -48,23 +48,23 @@
                 ng-click="vm.add()">Add</button>
         </div>
 
-	    <div class="table-responsive">
-	        <table class="jh-table table table-striped">
-	            <thead>
-	                <tr>
-	                    <th><span>Category</span></th>
-	                    <th><span>Subcategory</span></th>
-	                    <th></th>
-	                </tr>
-	            </thead>
-	            <tbody>
-	                <tr ng-repeat="lsData in vm.categoryDataList track by $index">
-	                    <td>{{lsData.category}}</td>
-	                    <td>{{lsData.subcategory}}</td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
+        <div class="table-responsive">
+  	        <table class="jh-table table table-striped">
+  	            <thead>
+  	                <tr>
+  	                    <th><span>Category</span></th>
+  	                    <th><span>Subcategory</span></th>
+  	                    <th></th>
+  	                </tr>
+  	            </thead>
+  	            <tbody>
+  	                <tr ng-repeat="lsData in vm.subcategoryEntryList track by $index">
+  	                    <td>{{lsData.category}}</td>
+  	                    <td>{{lsData.subcategory}}</td>
+  	                </tr>
+  	            </tbody>
+  	        </table>
+  	    </div>
 
     </div>
     <div class="modal-footer">

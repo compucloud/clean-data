@@ -2,7 +2,7 @@ entity Category {
 	name String required maxlength(256)
 }
 
-entity CategoryData {
+entity SubcategoryEntry {
 	category String required maxlength(256),
 	subcategory String required maxlength(256)
 }

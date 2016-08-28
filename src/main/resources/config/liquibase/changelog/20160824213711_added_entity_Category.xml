@@ -24,9 +24,28 @@
             <column name="name" type="varchar(256)">
                 <constraints nullable="false" />
             </column>
-            
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+        <insert tableName="category">
+            <column name="id" value="1"/>
+            <column name="name" value="PERSON"/>
+        </insert>
+        <insert tableName="category">
+            <column name="id" value="2"/>
+            <column name="name" value="PLACE"/>
+        </insert>
+        <insert tableName="category">
+            <column name="id" value="3"/>
+            <column name="name" value="ANIMAL"/>
+        </insert>
+        <insert tableName="category">
+            <column name="id" value="4"/>
+            <column name="name" value="COMPUTER"/>
+        </insert>
+        <insert tableName="category">
+            <column name="id" value="5"/>
+            <column name="name" value="OTHER"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>

@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -88,23 +89,16 @@ public class SubcategoryEntryResourceIntTest {
 
     @Test
     @Transactional
-    public void createSubcategoryEntry() throws Exception {
+    public void createSubcategoryEntryList() throws Exception {
         int databaseSizeBeforeCreate = subcategoryEntryRepository.findAll().size();
 
         // Create the SubcategoryEntry
-        SubcategoryEntryDTO subcategoryEntryDTO = subcategoryEntryMapper.subcategoryEntryToSubcategoryEntryDTO(subcategoryEntry);
-
+        SubcategoryEntryDTO subcategoryEntryDTO = new SubcategoryEntryDTO("PERSON","Bob Jones");
+        List<SubcategoryEntryDTO> subcategoryEntryDTOList = new ArrayList<SubcategoryEntryDTO>();
         restSubcategoryEntryMockMvc.perform(post("/api/subcategory-entries")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(subcategoryEntryDTO)))
-                .andExpect(status().isCreated());
-
-        // Validate the SubcategoryEntry in the database
-        List<SubcategoryEntry> subcategoryEntries = subcategoryEntryRepository.findAll();
-        assertThat(subcategoryEntries).hasSize(databaseSizeBeforeCreate + 1);
-        SubcategoryEntry testSubcategoryEntry = subcategoryEntries.get(subcategoryEntries.size() - 1);
-        assertThat(testSubcategoryEntry.getCategory()).isEqualTo(DEFAULT_CATEGORY);
-        assertThat(testSubcategoryEntry.getSubcategory()).isEqualTo(DEFAULT_SUBCATEGORY);
+                .content(TestUtil.convertObjectToJsonBytes(subcategoryEntryDTOList)))
+                .andExpect(status().isCreated());        
     }
 
     @Test
@@ -183,32 +177,7 @@ public class SubcategoryEntryResourceIntTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    @Transactional
-    public void updateSubcategoryEntry() throws Exception {
-        // Initialize the database
-        subcategoryEntryRepository.saveAndFlush(subcategoryEntry);
-        int databaseSizeBeforeUpdate = subcategoryEntryRepository.findAll().size();
 
-        // Update the subcategoryEntry
-        SubcategoryEntry updatedSubcategoryEntry = new SubcategoryEntry();
-        updatedSubcategoryEntry.setId(subcategoryEntry.getId());
-        updatedSubcategoryEntry.setCategory(UPDATED_CATEGORY);
-        updatedSubcategoryEntry.setSubcategory(UPDATED_SUBCATEGORY);
-        SubcategoryEntryDTO subcategoryEntryDTO = subcategoryEntryMapper.subcategoryEntryToSubcategoryEntryDTO(updatedSubcategoryEntry);
-
-        restSubcategoryEntryMockMvc.perform(put("/api/subcategory-entries")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(subcategoryEntryDTO)))
-                .andExpect(status().isOk());
-
-        // Validate the SubcategoryEntry in the database
-        List<SubcategoryEntry> subcategoryEntries = subcategoryEntryRepository.findAll();
-        assertThat(subcategoryEntries).hasSize(databaseSizeBeforeUpdate);
-        SubcategoryEntry testSubcategoryEntry = subcategoryEntries.get(subcategoryEntries.size() - 1);
-        assertThat(testSubcategoryEntry.getCategory()).isEqualTo(UPDATED_CATEGORY);
-        assertThat(testSubcategoryEntry.getSubcategory()).isEqualTo(UPDATED_SUBCATEGORY);
-    }
 
     @Test
     @Transactional

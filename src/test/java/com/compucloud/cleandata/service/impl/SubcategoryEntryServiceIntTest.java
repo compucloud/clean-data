@@ -42,29 +42,24 @@ public class SubcategoryEntryServiceIntTest {
 
     @Inject
     private SubcategoryEntryService subcategoryEntryService;
-    
+
     @Inject
     private CategoryService categoryService;
 
-    @Test    
+    @Test
     public void testSave() {
-    	
+
     	SubcategoryEntryDTO data = new SubcategoryEntryDTO();
     	data.setCategory("PERSON");
-    	data.setSubcategory("Pam");    	
-    	SubcategoryEntryDTO cd = subcategoryEntryService.save(data); 
+    	data.setSubcategory("Pam");
+    	SubcategoryEntryDTO cd = subcategoryEntryService.save(data);
     	assertNotNull(cd.getId());
-    	
+
     }
-    
+
     @Test
     public void testSaveList() {
-    	//Store Test Valid Categories
-    	categoryService.save(new CategoryDTO("PERSON"));
-    	categoryService.save(new CategoryDTO("PLACE"));
-    	categoryService.save(new CategoryDTO("ANIMAL"));
-    	categoryService.save(new CategoryDTO("COMPUTER"));
-    	categoryService.save(new CategoryDTO("OTHER"));
+    	//PERSON,PLACE,ANIMAL,COMPUTER,OTHER ARE DEFAULT CATEGORIES
     	//Create Test Data
     	List<SubcategoryEntryDTO> dataList = new ArrayList<SubcategoryEntryDTO>();
     	dataList.add(new SubcategoryEntryDTO("PERSON","Bob Jones"));
@@ -77,24 +72,24 @@ public class SubcategoryEntryServiceIntTest {
     	dataList.add(new SubcategoryEntryDTO("PLACE","Texas"));
     	dataList.add(new SubcategoryEntryDTO("FOOD","Steak"));
     	dataList.add(new SubcategoryEntryDTO("ANIMAL","Cat"));
-    	dataList.add(new SubcategoryEntryDTO("PERSON","Mac"));  	
+    	dataList.add(new SubcategoryEntryDTO("PERSON","Mac"));
     	//Perform operations and report results
-    	SubcategoryCompositeDTO cdComposite = subcategoryEntryService.saveList(dataList);      	
+    	SubcategoryCompositeDTO cdComposite = subcategoryEntryService.saveList(dataList);
     	assertEquals(9,cdComposite.getSubcategoryEntryDTOList().size());
-    	
+
     	for(CategoryCountDTO dto: cdComposite.getCategoryCountDTOList()){
     		System.out.println(dto.getName() + " " + dto.getCount());
     	}
-    	
+
     	assertEquals(5,cdComposite.getCategoryCountDTOList().size());
     	assertEquals("ANIMAL",cdComposite.getCategoryCountDTOList().get(2).getName());
     	assertEquals(2,cdComposite.getCategoryCountDTOList().get(2).getCount());
-    	
+
     }
-    
+
     @Test
     public void testFrequency() {
-    	
+
     	//Create Test Data
     	List<SubcategoryEntryDTO> dataList = new ArrayList<SubcategoryEntryDTO>();
     	dataList.add(new SubcategoryEntryDTO("PERSON","Bob Jones"));
@@ -107,27 +102,23 @@ public class SubcategoryEntryServiceIntTest {
     	dataList.add(new SubcategoryEntryDTO("PLACE","Texas"));
     	dataList.add(new SubcategoryEntryDTO("FOOD","Steak"));
     	dataList.add(new SubcategoryEntryDTO("ANIMAL","Cat"));
-    	dataList.add(new SubcategoryEntryDTO("PERSON","Mac"));  
+    	dataList.add(new SubcategoryEntryDTO("PERSON","Mac"));
     	dataList.add(new SubcategoryEntryDTO("PERSON","Bob Jones"));
     	int frequency = Collections.frequency(dataList, new SubcategoryEntryDTO("PERSON","Bob Jones"));
     	System.out.println(frequency);
     	assertEquals(3,frequency);
-    	
+
     	boolean exist = CollectionUtils.contains(dataList.iterator(), new SubcategoryEntryDTO("PERSON","Bob Jones"));
     	assertTrue(exist);
     }
-    
+
     @Test
     public void testFindCountDTO() {
-    	
+
     	assertEquals(0,subcategoryEntryService.findCategoryCounts().size());
-    	
-    	//Store Test Valid Categories
-    	categoryService.save(new CategoryDTO("PERSON"));
-    	categoryService.save(new CategoryDTO("PLACE"));
-    	categoryService.save(new CategoryDTO("ANIMAL"));
-    	categoryService.save(new CategoryDTO("COMPUTER"));
-    	categoryService.save(new CategoryDTO("OTHER"));
+
+    	//PERSON,PLACE,ANIMAL,COMPUTER,OTHER ARE DEFAULT CATEGORIES
+
     	//Create Test Data
     	List<SubcategoryEntryDTO> dataList = new ArrayList<SubcategoryEntryDTO>();
     	dataList.add(new SubcategoryEntryDTO("PERSON","Bob Jones"));
@@ -140,17 +131,17 @@ public class SubcategoryEntryServiceIntTest {
     	dataList.add(new SubcategoryEntryDTO("PLACE","Texas"));
     	dataList.add(new SubcategoryEntryDTO("FOOD","Steak"));
     	dataList.add(new SubcategoryEntryDTO("ANIMAL","Cat"));
-    	dataList.add(new SubcategoryEntryDTO("PERSON","Mac"));  	
+    	dataList.add(new SubcategoryEntryDTO("PERSON","Mac"));
     	//Perform operations and report results
-    	SubcategoryCompositeDTO cdComposite = subcategoryEntryService.saveList(dataList);     	
+    	SubcategoryCompositeDTO cdComposite = subcategoryEntryService.saveList(dataList);
     	assertEquals(9,cdComposite.getSubcategoryEntryDTOList().size());
-    	
+
     	List<CategoryCountDTO> counts = subcategoryEntryService.findCategoryCounts();
     	for(CategoryCountDTO dto: counts){
     		System.out.println(dto.getName() + " " + dto.getCount());
     	}
     	assertEquals(5,counts.size());
-    	
+
     }
 
 }

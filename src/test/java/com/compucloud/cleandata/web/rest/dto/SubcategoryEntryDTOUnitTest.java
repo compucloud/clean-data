@@ -23,47 +23,47 @@ import com.compucloud.cleandata.service.UserService;
 @WebAppConfiguration
 @IntegrationTest
 @Transactional
-public class CategoryDataDTOUnitTest {   
+public class SubcategoryEntryDTOUnitTest {
 
     @Test
     public void testEquals() {
-    	
-    	CategoryDataDTO data = new CategoryDataDTO();
+
+    	SubcategoryEntryDTO data = new SubcategoryEntryDTO();
     	data.setCategory("PERSON");
     	data.setSubcategory("Pam");
-    	
-    	CategoryDataDTO data2 = new CategoryDataDTO();
+
+    	SubcategoryEntryDTO data2 = new SubcategoryEntryDTO();
     	data2.setCategory("PERSON");
     	data2.setSubcategory("Pam");
     	assert(data.equals(data2));
-    	
-    	           
+
+
     }
-    
+
     @Test
     public void testNotEqual() {
-    	CategoryDataDTO data = new CategoryDataDTO();
+    	SubcategoryEntryDTO data = new SubcategoryEntryDTO();
     	data.setCategory("PERSON");
     	data.setSubcategory("Pam");
-    	
-    	CategoryDataDTO data2 = new CategoryDataDTO();
+
+    	SubcategoryEntryDTO data2 = new SubcategoryEntryDTO();
     	data2.setCategory("PERSON");
-    	data2.setSubcategory("Pama");   
-    	assertFalse(data.equals(data2)); 
-    	CategoryDataDTO data3 = new CategoryDataDTO();
+    	data2.setSubcategory("Pama");
+    	assertFalse(data.equals(data2));
+    	SubcategoryEntryDTO data3 = new SubcategoryEntryDTO();
     	data3.setCategory("PERSONa");
-    	data3.setSubcategory("Pam");  
-    	assertFalse(data.equals(data3)); 
-    	
-    	CategoryDataDTO data4 = new CategoryDataDTO();
+    	data3.setSubcategory("Pam");
+    	assertFalse(data.equals(data3));
+
+    	SubcategoryEntryDTO data4 = new SubcategoryEntryDTO();
     	data4.setCategory("PERSONa");
-    	data4.setSubcategory("Pama");  
+    	data4.setSubcategory("Pama");
     	assertFalse(data.equals(data4));
-    	
-    	CategoryDataDTO data5 = new CategoryDataDTO();    	
+
+    	SubcategoryEntryDTO data5 = new SubcategoryEntryDTO();
     	assertFalse(data.equals(data5));
-    	
-    	       
+
+
     }
 
 }

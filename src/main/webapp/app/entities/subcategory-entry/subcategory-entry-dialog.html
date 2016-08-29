@@ -4,7 +4,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="mySubcategoryEntryLabel">Create or edit a Subcategory Entry</h4>
+        <h2 class="modal-title" id="mySubcategoryEntryLabel">Add Subcategory API Client</h2>
     </div>
     <div ng-show="vm.editMode" class="modal-body" >
         <jhi-alert-error></jhi-alert-error>
@@ -76,7 +76,8 @@
     </div>
     <div class="modal-body" ng-hide="vm.editMode">
       Subcategory Entries Processed Successfully! See results below.
-      <h4>Records Processed</h4>
+      <h3>Summary of Entries Processed</h3>
+      <h4>Subcategories</h4>
       <div class="table-responsive">
           <table class="jh-table table table-striped">
               <thead>
@@ -94,7 +95,7 @@
               </tbody>
           </table>
       </div>
-      <h4>Summary</h4>
+      <h4>Category Count Summary</h4>
       <div class="table-responsive">
          <table class="jh-table table table-striped">
              <thead>

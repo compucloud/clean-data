@@ -29,15 +29,20 @@ Swagger Endpoint
 ## Screenshots
 Screenshots of the working application located in /documenation/screenshots folder, see featured screen grabs below.
 
-###### Add Categories
-![Image of Add Categories](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/addCategory.png)
-###### View Categories
-![Image of View Categories](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/viewCategories.png)
-###### Sample Client
-![Image of Sample Client](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/sampleClientAddData.png)
-###### Output Screen 1
-![Image of Output Screen 1](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/OutputScreen1.png)
-###### Output Screen 2
-![Image of Output Screen 2](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/outputScreen2.png)
+###### Home Page
+![Image of Home Page](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/logged-in.png
+)
+###### Navigation
+![Image of Navigation](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/navigation.png
+)
+###### Categories List
+![Image of Categories List](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/categories.png
+)
+###### Add Category
+![Image of Add Categories](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/add-category.png)
+###### Subcategories API Admin Client
+![Image of Sample Client](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/add-subcategories-client.png)
+###### Subcategories Processing Summary
+![Image of Output Screen 1](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/add-subcategories-client-output.png)
 ###### Swagger
 ![Image of Swagger](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/swagger.png)

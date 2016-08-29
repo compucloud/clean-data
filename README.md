@@ -16,9 +16,9 @@ Swagger Endpoint
 
 ## Design Decisions
 
-* Used Jhipster to create shell for the application. It creates Java web applications using industry best practices. One drawback is that it creates a lot of unnecessary code, however pros outweighs cons. Removing unnecessary code is pretty simple task. Once the extra code is peeled away your left with a well structured application that leverages common design patterns.
+* Used Jhipster to create shell for the application. It creates Java based web applications using industry standards and best practices. One drawback is that it creates a lot of unnecessary code, however pros outweighs cons. Removing unnecessary code is pretty simple task. Once the extra code is peeled away your left with a well structured application that leverages common design patterns.
 * The Tech Stack used here is Java 8, SpringBoot, SpringMVC, Angular, Hibernate ,HazelCast,  PostGres and Liquibase. Services can be easily deployed to docker containers for microservices.
-* For persistence operations, most are straight forward utilizing Spring JPA Repository CRUD operations for Category. For CategoryData Collections were used to group Categories to show count information. This should be optimized by performing groupBy queries on the database instead. In general, the business rule operations can be optimized significantly by offloading more of the work to the database instead of pulling into Java memory stack.
+* For persistence operations, most are straight forward utilizing Spring JPA Repository.
 * UnitTest Cases were created for Service Layer operations that clean data and get count info. Service side code coverage should be near 100%. Unit test code coverage for UI layer at 95%.
 * All business logic resides in the the services layer separate from Resources classes, with the idea being keep  REST Resources simple, storing business logic together in service classes.
 *  The application can be auto-scaled, it includes HazelCast Web Session clustering enabled. Deploying this is rather simple and can be done in roughly an hour on AWS. For a quick deployment I would recommend deploying the war for this service on to AWS Elastic Bean Stalk which has an Apache HTTP + Tomcat setup and tie it to a PostGres RDS instance. Autoscaling Policy can be configured within EBS to start the application with a minimum of 2 instances and maximum of five. New instances are added when the Average CPU Utilization is greater than 75% for five consecutive minutes. Policy should also include an alarm to notify system administrators each time a new instance is created.
@@ -46,3 +46,7 @@ Screenshots of the working application located in /documenation/screenshots fold
 ![Image of Output Screen 1](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/add-subcategories-client-output.png)
 ###### Swagger
 ![Image of Swagger](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/swagger.png)
+###### Monitoring Application Metrics
+![Image of Metrics](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/application-metrics.png)
+###### Monitoring Logs
+![Image of Monitoring Logs](https://github.com/compucloud/clean-data/blob/master/documentation/screenshots/logging.png)
